@@ -1,10 +1,12 @@
 FROM ghcr.io/open-webui/open-webui:main
 
-# Ensure app binds correctly on Render
 ENV HOST=0.0.0.0
 ENV PORT=8080
 
-# Optional: persistent storage path
+# 👇 CRITICAL FIX
 ENV DATA_DIR=/data
+
+# Ensure directory exists
+RUN mkdir -p /data && chmod -R 777 /data
 
 EXPOSE 8080
