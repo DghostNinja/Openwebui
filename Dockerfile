@@ -1,22 +1,19 @@
-# Base image
 FROM python:3.11-slim
 
-# Install system dependencies
+# Minimal system dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
     git \
     curl \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Clone Open WebUI directly
+# Clone Open WebUI repo
 RUN git clone https://github.com/DghostNinja/Openwebui.git . && \
     git checkout ff1d94eed27b06025e1a8680be489c4e025ba802
 
-# Install Python dependencies
-# Use PyPI for general packages, PyTorch CPU wheels for torch
+# Install only essential Python packages first (lightweight)
 RUN pip install --no-cache-dir \
     fastapi \
     uvicorn[standard] \
@@ -25,12 +22,14 @@ RUN pip install --no-cache-dir \
     aiofiles \
     python-multipart \
     pillow \
-    transformers && \
-    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+    transformers
 
-# Expose port for Render
+# Delay heavy torch install until needed
+# Users can run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# Set Render default port
 ENV PORT=8080
 EXPOSE 8080
 
 # Start Open WebUI
-CMD ["python", "main.py", "--host", "0.0.0.0", "--port", "8080", "--data-dir", "/tmp"]
+CMD ["python", "app.py", "--host", "0.0.0.0", "--port", "8080"]
