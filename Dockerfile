@@ -1,18 +1,17 @@
-# ---- Base Image ----
+# ---- Base image ----
 FROM python:3.11-slim
 
 # ---- Set working directory ----
 WORKDIR /app
 
-# ---- Install system dependencies ----
+# ---- System dependencies ----
 RUN apt-get update && apt-get install -y \
-    build-essential \
     git \
-    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- Copy your FastAPI app ----
-COPY main.py .
+# ---- Clone your repository ----
+RUN git clone https://github.com/DghostNinja/Openwebui.git . \
+    && git checkout ff1d94eed27b06025e1a8680be489c4e025ba802
 
 # ---- Install Python dependencies ----
 RUN pip install --no-cache-dir --upgrade pip \
@@ -25,11 +24,14 @@ RUN pip install --no-cache-dir --upgrade pip \
         python-multipart \
         pillow \
         transformers \
-        torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir git+https://github.com/DghostNinja/Openwebui.git
 
-# ---- Expose port (Render expects 8080) ----
-EXPOSE 8080
+# ---- Expose port for Render ----
+EXPOSE 8000
 
-# ---- Run the FastAPI app ----
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# ---- Set environment variable for web concurrency ----
+ENV WEB_CONCURRENCY=1
+
+# ---- Start the app ----
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
