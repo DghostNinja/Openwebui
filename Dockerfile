@@ -15,7 +15,8 @@ WORKDIR /app
 RUN git clone https://github.com/DghostNinja/Openwebui.git . && \
     git checkout ff1d94eed27b06025e1a8680be489c4e025ba802
 
-# Install Python dependencies inline
+# Install Python dependencies
+# Use PyPI for general packages, PyTorch CPU wheels for torch
 RUN pip install --no-cache-dir \
     fastapi \
     uvicorn[standard] \
@@ -24,9 +25,8 @@ RUN pip install --no-cache-dir \
     aiofiles \
     python-multipart \
     pillow \
-    transformers \
-    torch --index-url https://download.pytorch.org/whl/cpu \
-    && pip install --no-cache-dir git+https://github.com/DghostNinja/Openwebui.git
+    transformers && \
+    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
 # Expose port for Render
 ENV PORT=8080
