@@ -9,6 +9,8 @@ kill_timeout = "10s"
 [env]
   PORT = "8080"
   WEBUI_PORT = "8080"
+  ENABLE_MODEL_DOWNLOAD = "false"
+  OFFLINE_MODE = "true"
 
 [http_service]
   internal_port = 8080
