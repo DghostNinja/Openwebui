@@ -8,9 +8,9 @@ ENV DO_NOT_TRACK=true
 ENV SCARF_NO_ANALYTICS=true
 ENV OLLAMA_BASE_URL=""
 ENV WEBUI_AUTH=false
-ENV WEBUI_PORT=8080
-ENV PORT=8080
+
+WORKDIR /app/backend
 
 EXPOSE 8080
 
-CMD ["bash", "start.sh"]
+CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "1"]
