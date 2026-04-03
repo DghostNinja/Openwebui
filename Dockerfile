@@ -8,9 +8,8 @@ ENV DO_NOT_TRACK=true
 ENV SCARF_NO_ANALYTICS=true
 ENV OLLAMA_BASE_URL=""
 ENV WEBUI_AUTH=false
-
-WORKDIR /app/backend
+ENV PORT=8080
 
 EXPOSE 8080
 
-CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["bash", "start.sh"]
