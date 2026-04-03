@@ -13,4 +13,4 @@ WORKDIR /app/backend
 
 EXPOSE 8080
 
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "1"]
+CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
