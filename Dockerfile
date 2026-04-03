@@ -11,8 +11,6 @@ ENV WEBUI_AUTH=false
 ENV PORT=8080
 ENV WEBUI_PORT=8080
 
-WORKDIR /app/backend
-
 EXPOSE 8080
 
-CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["bash", "start.sh"]
