@@ -1,4 +1,4 @@
-FROM ghcr.io/open-webui/open-webui:tiny
+FROM ghcr.io/open-webui/open-webui:slim
 
 ENV USE_OLLAMA_DOCKER=false
 ENV USE_CUDA_DOCKER=false
