@@ -22,6 +22,6 @@ kill_timeout = "10s"
   release_command = "echo 'Deploying...'"
 
 [[vm]]
-  memory = "512mb"
+  memory = "1gb"
   cpu_kind = "shared"
   cpus = 1

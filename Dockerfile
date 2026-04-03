@@ -1,8 +1,7 @@
-FROM ghcr.io/open-webui/open-webui:slim
+FROM ghcr.io/open-webui/open-webui:tiny
 
 ENV USE_OLLAMA_DOCKER=false
 ENV USE_CUDA_DOCKER=false
-ENV USE_SLIM_DOCKER=true
 ENV ANONYMIZED_TELEMETRY=false
 ENV DO_NOT_TRACK=true
 ENV SCARF_NO_ANALYTICS=true
